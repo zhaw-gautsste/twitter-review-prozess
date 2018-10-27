@@ -8,8 +8,8 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
  * Implementation des Send Tasks "Mitarbeiter benachrichtigen"
  * @author Stefan
  */
-@Named("notifyEmloyeeAdapter")
-public class NotifyEmloyeeDelegate implements JavaDelegate {
+@Named("notifyEmployeeAdapter")
+public class NotifyEmployeeDelegate implements JavaDelegate {
 
     /**
      * Mockt das Senden einer Benachrichtigung per Mail
@@ -27,11 +27,12 @@ public class NotifyEmloyeeDelegate implements JavaDelegate {
         String email = (String) de.getVariable("email");
         String tweetContent = (String) de.getVariable("tweetContent");
         String checkResult = (String) de.getVariable("checkResult");
-        String checkResultComment = (String) de.getVariable("checkResultComment");
-        
+        String checkResultComment = (String) de.getVariable("checkResultComment");        String mailMainPart = (String)de.getVariable("mailMainPart");
         // Die E-Mail-Nachricht zusammenbauen
-        String mailHauptteil;
-        if(checkResult.equals("rejected")){
+    String mailHauptteil; 
+    if(mailMainPart != null){             
+        mailHauptteil = mailMainPart;         
+    } else if(checkResult.equals("rejected")){
             mailHauptteil = "Leider wurde diese Tweet-Anfrage abgelehnt mit " +
                     "folgender Begründung:\n" + checkResultComment;
         } else {
